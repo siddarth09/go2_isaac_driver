@@ -1,0 +1,17 @@
+# Request
+# Body pose in world: [x, y, z, roll, pitch, yaw]
+float64[6] body_pose
+
+# Foot positions in world (order: FR, FL, RR, RL), 4 × [x,y,z] flattened to length 12
+float64[12] foot_positions_world
+
+---
+# Response
+# Joint angles (order by leg FR, FL, RR, RL; each leg: [hip_abd, hip_pitch, knee])
+float64[12] joint_angles
+
+# Set true on success, false on any failure (e.g., IK not solvable / invalid inputs)
+bool success
+
+# Diagnostic message when success==false
+string message
