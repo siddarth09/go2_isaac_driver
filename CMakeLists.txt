@@ -15,6 +15,7 @@ find_package(actionlib_msgs REQUIRED)
 find_package(visualization_msgs REQUIRED)
 find_package(diagnostic_msgs REQUIRED)
 find_package(rclcpp_action REQUIRED)
+find_package(tf2 REQUIRED)
 # uncomment the following section in order to fill in
 # further dependencies manually.
 # find_package(<dependency> REQUIRED)
@@ -33,12 +34,27 @@ include_directories(include)
 # INVERSEKINEMATICS 
 add_executable(go2_ik_service src/inversekinematics.cpp)
 ament_target_dependencies(go2_ik_service rclcpp sensor_msgs)
-
 rosidl_target_interfaces(go2_ik_service
+  ${PROJECT_NAME} "rosidl_typesupport_cpp")
+
+
+# Stand Control
+add_executable(go2_stand src/StandControl.cpp)
+ament_target_dependencies(go2_stand rclcpp sensor_msgs tf2)
+rosidl_target_interfaces(go2_stand
+  ${PROJECT_NAME} "rosidl_typesupport_cpp")
+
+
+# Sit Control
+add_executable(go2_sit src/SitControl.cpp)
+ament_target_dependencies(go2_sit rclcpp sensor_msgs tf2)
+rosidl_target_interfaces(go2_sit
   ${PROJECT_NAME} "rosidl_typesupport_cpp")
 
 install(TARGETS 
   go2_ik_service
+  go2_stand
+  go2_sit
 
   DESTINATION lib/${PROJECT_NAME})
 
